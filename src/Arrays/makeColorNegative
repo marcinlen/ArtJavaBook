@@ -1,0 +1,19 @@
+
+	private GImage makeColorNegative(GImage image) {
+		int[][] array = image.getPixelArray();
+		int[][] negative = new int[array.length][array[0].length];
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array[0].length; j++) {
+				int x = array[i][j];
+				int alpha = (x >> 24) & 0xFF;
+				int red = (x >> 16) & 0xFF;
+				int green = (x >> 8) & 0xFF;
+				int blue = x & 0xFF;
+				red = ~red; green = ~green; blue = ~blue;
+				red = red & 0xFF; green = green & 0xFF; blue = blue & 0xFF; 
+				int pixel = (alpha << 24) | (red << 16) | (green << 8) | (blue);
+				negative[i][j] = pixel;
+			}
+		}
+		return new GImage(negative);
+	}
